@@ -1,6 +1,7 @@
 <?php
 session_start(); //start session
 include("config.inc.php");
+
 setlocale(LC_MONETARY,"es_ES"); // US national format (see : http://php.net/money_format)
 ?>
 <!DOCTYPE HTML>
@@ -47,15 +48,17 @@ if(isset($_SESSION["products"]) && count($_SESSION["products"])>0){
 	}
 	
 	$shipping_cost = ($shipping_cost)?'Shipping Cost : '.$currency. sprintf("%01.2f", $shipping_cost).'<br />':'';
-	
+	$_SESSION["payableAmount"] = $grand_total;
 	//Print Shipping, VAT and Total
 	$cart_box .= "<li class=\"view-cart-total\">$shipping_cost  $list_tax <hr>Payable Amount : $currency ".sprintf("%01.2f", $grand_total)."</li>";
+        $cart_box .= "<li> <a href='user.php'>Comprar ya</a> </li>";
 	$cart_box .= "</ul>";
 	
 	echo $cart_box;
 }else{
 	echo "Your Cart is empty";
 }
+var_dump($_SESSION);
 ?>
 </body>
 </html>
